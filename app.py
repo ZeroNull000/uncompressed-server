@@ -17,6 +17,7 @@ def register():
     
     directory[device_id] = {
         "name": data.get('name'),
+        "public_key": data.get('public_key'), # <--- ADD THIS LINE
         "last_seen": time.time()
     }
     return jsonify({"status": "success", "message": "Registered"})
@@ -62,3 +63,4 @@ def lookup():
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
+
