@@ -253,5 +253,19 @@ def get_messages():
     except Exception as e:
         return jsonify({"messages": []}) # Return empty list on error to keep app alive
 
+# --- DEBUG ROUTE (Add this near the bottom) ---
+@app.route('/', methods=['GET'])
+def health_check():
+    try:
+        conn = get_db_connection()
+        cur = conn.cursor()
+        cur.execute("SELECT 1")
+        cur.close()
+        conn.close()
+        return "✅ Database Connected! Server is running."
+    except Exception as e:
+        return f"❌ Database Error: {str(e)}"
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
+
